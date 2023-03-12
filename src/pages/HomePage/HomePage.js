@@ -33,7 +33,7 @@ export default function HomePage() {
         <Image src={Vector1} />
         <Image src={Vector2} />
       </Flex>
-      <Flex justifyContent={'center'}>
+      <Flex justifyContent={'center'} >
         <Image src={Vector3} />
         <Image src={Vector4} />
       </Flex>
