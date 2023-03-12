@@ -47,7 +47,7 @@ export default function SignupPage() {
                
                 justify={'space-between'}>
                 <Box>
-                  <Text fontSize={"14px"} color={'gray.600'} textAlign={"left"}>
+                  <Text fontSize={"14px"} textAlign={"left"}>
                     Ao continuar, você concorda com o nosso
                     <Link color={'blue.400'}> Contrato de usuário </Link>
                     e nossa
