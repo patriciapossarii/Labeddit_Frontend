@@ -13,20 +13,23 @@ import {
   Text,
   useColorModeValue,
 } from '@chakra-ui/react';
+import Header from '../../components/Header';
 
 export default function SignupPage() {
+
   return (
-  
-        <Box
+    <div>
+      <Header isOnSignupPage={true} />
+      <Box
         spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}
- align={'center'}
-          rounded={'lg'}
-          bg={useColorModeValue('white', 'gray.700')}
-         // boxShadow={'lg'}
-          p={8}>
-            <Heading fontSize={'4xl'}>Olá, boas vindas ao LabEddit ;)
-          </Heading>
-          <Box marginTop={"250px"}>
+        align={'center'}
+        rounded={'lg'}
+        bg={useColorModeValue('white', 'gray.700')}
+        // boxShadow={'lg'}
+        p={8}>
+        <Heading fontSize={'4xl'}>Olá, boas vindas ao LabEddit ;)
+        </Heading>
+        <Box marginTop={"250px"}>
           <Stack spacing={4}>
             <FormControl id="nickName" >
               <Input type="nickname" placeholder="Apelido"
@@ -44,7 +47,7 @@ export default function SignupPage() {
             <Stack spacing={10}>
               <Stack
                 display={"flex"}
-               
+
                 justify={'space-between'}>
                 <Box>
                   <Text fontSize={"14px"} textAlign={"left"}>
@@ -54,10 +57,10 @@ export default function SignupPage() {
                     <Link color={'blue.400'}> Política de Privacidade</Link>
                   </Text>
                 </Box>
-                
-                  <Checkbox > <Text textAlign={"left"}  fontSize={"14px"}>
-                    Eu concordo em receber emails sobre coisas legais no Labeddit</Text></Checkbox>
-               
+
+                <Checkbox > <Text textAlign={"left"} fontSize={"14px"}>
+                  Eu concordo em receber emails sobre coisas legais no Labeddit</Text></Checkbox>
+
 
               </Stack>
               <Button
@@ -71,8 +74,8 @@ export default function SignupPage() {
               </Button>
             </Stack>
           </Stack>
-          </Box>
         </Box>
-   
+      </Box>
+    </div>
   );
 }
