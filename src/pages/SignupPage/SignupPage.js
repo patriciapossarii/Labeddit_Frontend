@@ -11,7 +11,7 @@ import {
 import { useState } from 'react';
 import { useForm } from '../../hooks/use-form';
 import { validadeNickname, validateEmail, validatePassword,Signup } from '../../constants/url';
-import Header from '../../components/Header';
+import Header from '../../components/Header/Header';
 import { EmailInput } from '../../inputs/email';
 import { PasswordInput } from '../../inputs/password';
 import { NicknameInput } from '../../inputs/nickname';
@@ -62,10 +62,11 @@ export default function SignupPage() {
         rounded={'lg'}
         bg={useColorModeValue('white', 'gray.700')}
         // boxShadow={'lg'}
-        p={8}>
-        <Heading fontSize={'4xl'}>Olá, boas vindas ao LabEddit ;)
+        p={8}
+        >
+        <Heading fontSize={'33px'}>Olá, boas vindas ao LabEddit ;)
         </Heading>
-        <Box marginTop={"250px"}>
+        <Box marginTop={"245px"}>
           <Stack spacing={4}>
 
 
@@ -108,7 +109,8 @@ export default function SignupPage() {
                   color={'white'}
                   _hover={{
                     bgGradient: 'linear(90deg, #FF6489 50%, #F9B24E 100%)',
-                  }}>
+                  }}
+                  margin={"10px"}>
                   Cadastrar
                 </Button>
               </Stack>

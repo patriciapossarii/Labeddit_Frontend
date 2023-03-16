@@ -9,7 +9,7 @@ import { useState } from "react";
 import { goToPostDetailPage } from "../../routes/coordinator";
 import { useNavigate } from 'react-router-dom';
 
-export default function CardPosts({ id, creator, content, likesDislikes, totalComments }) {
+export default function CardComments({ id, creator, content, likesDislikes, totalComments }) {
 
     const [liked, setLiked] = useState(false);
     const [disliked, setDisliked] = useState(false);
@@ -70,13 +70,7 @@ export default function CardPosts({ id, creator, content, likesDislikes, totalCo
                     </Flex>
                 </Card>
 
-                <Card align='center' margin={"20px"} width={"66px"} height={"28px"} direction={"row"} borderRadius={"28px"}
-                    colorScheme='ECECEC' variant='outline' bg={"#FBFBFB"} justifyContent={"space-around"} onClick={() => onClickCard(id)}>
-
-                    <GoComment color={"#6F6F6F"} margin={"5px"} />
-                    <Text margin={"5px"}>{totalComments}</Text>
-
-                </Card>
+             
 
             </Flex>
 

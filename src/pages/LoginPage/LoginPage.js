@@ -61,10 +61,11 @@ export default function LoginPage() {
       spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}
       align={'center'}
       rounded={'lg'}
-      bg={useColorModeValue('white', 'gray.700')}
+    
+     // bg={useColorModeValue('white', 'gray.700')}
       // boxShadow={'lg'}
       p={8}>
-      <Flex justifyContent={'center'}>
+      <Flex justifyContent={'center'}   marginTop={"100px"}>
         <Image src={Vector1} />
         <Image src={Vector2} />
       </Flex>
@@ -74,20 +75,22 @@ export default function LoginPage() {
       </Flex>
       <Heading fontSize={'4xl'}>LabEddit
       </Heading>
-      <Text fontSize={'lg'} color={'gray.600'}>
+      <Text fontSize={'16px'} color={'gray.600'}>
         O projeto de rede social da Labenu ✌️
       </Text>
-      <Box marginTop={"250px"}>
+      <Box marginTop={"150px"}>
 
-        <Stack spacing={4}>
+        <Stack spacing={1} >
 
           <form onSubmit={onSubmit}>
 
             <EmailInput isValid={isEmailValid} value={form.email} onChange={onChangeInputs} />
 
-            <PasswordInput isValid={isPasswordValid} value={form.password} onChange={onChangeInputs} />
-
+            <PasswordInput  isValid={isPasswordValid} value={form.password} onChange={onChangeInputs} />
+            <br/>
             <Button
+            
+            margin={"10px"} 
               type="submit"
               variant="form"
               bgGradient='linear(90deg, #FF6489 0%, #F9B24E 100%)'
@@ -95,18 +98,18 @@ export default function LoginPage() {
               color={'white'}
               _hover={{
                 bgGradient: 'linear(90deg, #FF6489 50%, #F9B24E 100%)',
-              }}>  Continuar  </Button>
+              }} width={"100%"}>  Continuar  </Button>
 
 
-            <Divider borderColor={'#FE7E02'} />
+            <Divider borderColor={'#FE7E02'} margin={"10px"} />
 
-            <Button colorScheme={'#FE7E02'} variant='outline' borderRadius={"27px"} color={'#FE7E02'}
+            <Button margin={"10px"}  colorScheme={'#FE7E02'} variant='outline' borderRadius={"27px"} color={'#FE7E02'}
               _hover={{
                 bgGradient: 'linear(90deg, #FF6489 50%, #F9B24E 100%)',
                 color: ' white '
               }}
               onClick={() => goToSignupPage(navigate)}
-            >Crie uma conta!   </Button>
+              width={"100%"} >Crie uma conta!   </Button>
 
           </form>
 
