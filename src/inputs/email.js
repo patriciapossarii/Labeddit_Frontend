@@ -9,7 +9,7 @@ import {
 
 export const EmailInput = ({ isValid, value, onChange }) => {
     return (
-        <FormControl id="email" isInvalid={!isValid}>
+        <FormControl margin={"10px"}  id="email" isInvalid={!isValid}>
             <InputGroup size='md'>
                 <Input focusBorderColor={'#FE7E02'}
                     placeholder="E-mail"
