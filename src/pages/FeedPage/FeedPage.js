@@ -50,6 +50,17 @@ export default function FeedPage() {
   const [posts, setPosts] = useState([])
 
   useEffect(() => {
+    if (posts.length > 0) {
+      const postsString = JSON.stringify(posts)
+      localStorage.setItem("posts", postsString)
+    }
+
+    const postsGet = localStorage.getItem("posts")
+    if (postsGet !== null) {
+      const postsArray = JSON.parse(postsGet)
+      setPosts(postsArray)
+    }
+
     ListPosts()
 
       .then(data => {
@@ -57,6 +68,8 @@ export default function FeedPage() {
         console.log(data)
 
       })
+
+      
       .catch((error) => {
        console.log(error.response.data.message)
       }
@@ -66,6 +79,25 @@ export default function FeedPage() {
   if (!posts) {
     return <Spinner color='red.500' />;
   }
+
+  /*
+  useEffect(() => {
+    if (posts.length > 0) {
+      const postsString = JSON.stringify(posts)
+      localStorage.setItem("posts", postsString)
+    }
+  }, [posts])
+
+
+  useEffect(() => {
+    const postsGet = localStorage.getItem("posts")
+    if (postsGet !== null) {
+      const postsArray = JSON.parse(postsGet)
+      setPosts(postsArray)
+    }
+  }, [])
+*/
+
   return (
     <>
       <Header isOnFeedPage={true} />

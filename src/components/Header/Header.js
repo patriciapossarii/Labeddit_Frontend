@@ -9,7 +9,7 @@ import {
     ButtonGroup,
     Spacer,
 } from '@chakra-ui/react';
-import { MoonIcon, SunIcon } from '@chakra-ui/icons';
+import { MoonIcon, SunIcon, } from '@chakra-ui/icons';
 import { useNavigate } from "react-router-dom";
 import Vector1 from "../../assets/Vector1.svg"
 import Vector2 from "../../assets/Vector2.svg"
@@ -17,7 +17,7 @@ import Vector3 from "../../assets/Vector3.svg"
 import Vector4 from "../../assets/Vector4.svg"
 import { goToLoginPage } from '../../routes/coordinator';
 import { goToFeedPage } from '../../routes/coordinator';
-
+import { GrClose } from 'react-icons/gr'
 
 export default function Header(props) {
     const { colorMode, toggleColorMode } = useColorMode();
@@ -28,7 +28,17 @@ export default function Header(props) {
             <Box bg={useColorModeValue('#EDEDED', 'gray.900')} h={"50px"}>
 
                 <Flex minWidth='max-content' alignItems='center' gap='2'>
-                    <Spacer />
+                <Spacer />
+                    {isOnPostDetailPage &&
+                        <Button
+                            as={Button}
+                            rounded={'full'}
+                            variant={'link'}
+                            cursor={'pointer'}
+                            minW={0}
+                            onClick={() => goToFeedPage(navigate)}>
+                           <GrClose borderColor={'#A3A3A3'}/>
+                        </Button>}
                     <Spacer />
                     <Spacer />
                     <Spacer />
@@ -74,6 +84,9 @@ export default function Header(props) {
                             </Button>
                         }
                         {isOnPostDetailPage &&
+
+
+
                             <Button
                                 as={Button}
                                 rounded={'full'}
@@ -83,6 +96,7 @@ export default function Header(props) {
                                 onClick={() => goToLoginPage(navigate)}>
                                 <Text color={" #4088CB"}>Sair</Text>
                             </Button>
+
                         }
 
 
