@@ -7,30 +7,40 @@ import {
   Checkbox,
   Stack,
   Link,
+  Spinner,
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useForm } from '../../hooks/use-form';
-import { validadeNickname, validateEmail, validatePassword,Signup } from '../../constants/url';
+import { validadeNickname, validateEmail, validatePassword, Signup } from '../../constants/url';
 import Header from '../../components/Header/Header';
 import { EmailInput } from '../../inputs/email';
 import { PasswordInput } from '../../inputs/password';
 import { NicknameInput } from '../../inputs/nickname';
 import { goToFeedPage } from '../../routes/coordinator';
 import { useNavigate } from 'react-router-dom';
+import { GlobalContext } from '../../contexts/GlobalContext';
 
 
 export default function SignupPage() {
-
+  const [isEmailValid, setIsEmailValid] = useState(true)
+  const [isPasswordValid, setPasswordValid] = useState(true)
+  const [isNickNameValid, setNickNameValid] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
+  const context = useContext(GlobalContext)
+  const navigate = useNavigate()
   const [form, onChangeInputs, clearInputs] = useForm({
     nickname: "",
     email: "",
     password: ""
   })
 
-  const [isEmailValid, setIsEmailValid] = useState(true)
-  const [isPasswordValid, setPasswordValid] = useState(true)
-  const [isNickNameValid, setNickNameValid] = useState(true)
-  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (context.isAuth) {
+      goToFeedPage(navigate)
+    }
+  })
+
 
   const onSubmit = async (e) => {
     e.preventDefault()
@@ -38,17 +48,20 @@ export default function SignupPage() {
     setIsEmailValid(validateEmail(form.email))
     setPasswordValid(validatePassword(form.password))
     setNickNameValid(validadeNickname(form.nickname))
-  
     try {
-      const { token } =isNickNameValid && isEmailValid && isPasswordValid && await Signup({
-       nickname:form.nickname,
+      setIsLoading(true)
+      const { token } = isNickNameValid && isEmailValid && isPasswordValid && await Signup({
+        nickname: form.nickname,
         email: form.email,
         password: form.password
       })
       localStorage.setItem("labeddit.token", token);
       goToFeedPage(navigate)
+      setIsLoading(false)
+      context.setIsAuth(true)
     } catch (error) {
       alert(error.response.data)
+      setIsLoading(false)
     }
   }
 
@@ -63,15 +76,11 @@ export default function SignupPage() {
         bg={useColorModeValue('white', 'gray.700')}
         // boxShadow={'lg'}
         p={8}
-        >
+      >
         <Heading fontSize={'33px'}>Olá, boas vindas ao LabEddit ;)
         </Heading>
         <Box marginTop={"245px"}>
           <Stack spacing={4}>
-
-
-
-
 
             <form onSubmit={onSubmit}>
 
@@ -80,8 +89,6 @@ export default function SignupPage() {
               <EmailInput isValid={isEmailValid} value={form.email} onChange={onChangeInputs} />
 
               <PasswordInput isValid={isPasswordValid} value={form.password} onChange={onChangeInputs} />
-
-
 
               <Stack spacing={10}>
                 <Stack
@@ -99,8 +106,6 @@ export default function SignupPage() {
 
                   <Checkbox > <Text textAlign={"left"} fontSize={"14px"}>
                     Eu concordo em receber emails sobre coisas legais no Labeddit</Text></Checkbox>
-
-
                 </Stack>
                 <Button
                   type={"submit"}
@@ -111,12 +116,10 @@ export default function SignupPage() {
                     bgGradient: 'linear(90deg, #FF6489 50%, #F9B24E 100%)',
                   }}
                   margin={"10px"}>
-                  Cadastrar
+                  {isLoading ? <Spinner /> : "Cadastrar"}
                 </Button>
               </Stack>
-
             </form>
-
           </Stack>
         </Box>
       </Box>

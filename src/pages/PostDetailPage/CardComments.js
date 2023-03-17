@@ -3,9 +3,10 @@ import { TbArrowBigDown, TbArrowBigUp } from 'react-icons/tb';
 import {
     Flex,
     Text,
+    useColorModeValue,
 } from '@chakra-ui/react';
 import { GoComment } from 'react-icons/go';
-import {useState } from "react";
+import { useEffect, useState } from "react";
 import { goToPostDetailPage } from "../../routes/coordinator";
 import { useNavigate } from 'react-router-dom';
 import { CreateLikeDislikeComment } from "../../constants/url";
@@ -16,17 +17,21 @@ export default function CardComments({ idPost, id, creator, content, likesDislik
 
     const [liked, setLiked] = useState();
     const [disliked, setDisliked] = useState();
- 
-
-
     const navigate = useNavigate()
 
-    const onClickCard = (id) => {
-        goToPostDetailPage(navigate, id)
 
+    const onSubmitLike = async (e) => {
+        try {
+            await CreateLikeDislikeComment(idPost, {
+                like: e
+            }, id)
+            alert("like ou dislike");
+        } catch (error) {
+            alert(error.response.data)
+        }
     }
 
-    const onclickLiked = (e) => {
+    const onclickLiked = () => {
         onSubmitLike(true)
         if (liked === true) {
             setLiked(false)
@@ -36,28 +41,8 @@ export default function CardComments({ idPost, id, creator, content, likesDislik
         setDisliked(false)
     }
 
-
-    const onSubmitLike = async (e) => {
-
-        try {
-            console.log("aquiiiii", e)
-            await CreateLikeDislikeComment(idPost, {
-                like: e
-            }, id)
-
-            alert("like ou dislike");
-
-        } catch (error) {
-            alert(error.response.data)
-        }
-
-    }
-
-
-
-
-    const onclickDisliked = (e) => {
-                onSubmitLike(false)
+    const onclickDisliked = () => {
+        onSubmitLike(false)
         if (disliked === true) {
             setDisliked(false)
         } else {
@@ -66,38 +51,9 @@ export default function CardComments({ idPost, id, creator, content, likesDislik
         setLiked(false)
     }
 
-    /*
- useEffect (() => {
-        if (liked.length>0) {
-            const likedString = JSON.stringify(liked)
-            localStorage.setItem("like", likedString)
-        }
-    })
-*/
 
-
-    //idPost,body,idComment
-
-    /*
-       const onSubmitLike = async (e) => {
-           e.preventDefault()
-                   try {
-              await CreateLikeDislikeComment(id, {
-               content: form.content
-             })
-             alert("Comentário Cadastrado");
-       
-           } catch (error) {
-             alert(error.response.data)
-           }
-         }
-   */
-
-
-    console.log("like", liked)
-    console.log("disliked", disliked)
     return (
-        <Card margin={"30px"} bg={"#FBFBFB"} borderColor={"#E0E0E0"} >
+        <Card margin={"30px"} bg={useColorModeValue("#FBFBFB", '#FBFBFB"', 'gray.700')} borderColor={"#E0E0E0"} >
 
 
             <Text color={"#6F6F6F"} fontSize={"12px"} align={"left"} position={"absolute"} margin={"10px"}>
@@ -109,10 +65,10 @@ export default function CardComments({ idPost, id, creator, content, likesDislik
             </CardBody>
 
 
-            <Flex align='center' bg={"#FBFBFB"} direction={"row"} >
+            <Flex align='center' bg={useColorModeValue("#FBFBFB", '#FBFBFB"', 'gray.700')} direction={"row"} >
 
-                <Card align='center' margin={"20px"} width={"98px"} height={"28px"} bg={"#FBFBFB"} direction={"row"} borderRadius={"28px"}
-                    colorScheme='ECECEC' variant='outline' justifyContent={"space-around"}>
+                <Card align='center' margin={"20px"} width={"98px"} height={"28px"} direction={"row"} borderRadius={"28px"}
+                    colorScheme='ECECEC' variant='outline' justifyContent={"space-around"} bg={useColorModeValue("#FBFBFB", '#FBFBFB"', 'gray.700')}>
                     <Flex
                         alignItems="center"
                         justifyContent={'space-between'}
@@ -123,6 +79,7 @@ export default function CardComments({ idPost, id, creator, content, likesDislik
 
                         {liked ? (
                             <TbArrowBigUp color={"#6F6F6F"} fill="green" fontSize={'24px'} />
+
                         ) : (
                             <TbArrowBigUp color={"#6F6F6F"} fontSize={'24px'} />
                         )}
@@ -142,17 +99,7 @@ export default function CardComments({ idPost, id, creator, content, likesDislik
                         )}
                     </Flex>
                 </Card>
-
-                <Card align='center' margin={"20px"} width={"66px"} height={"28px"} direction={"row"} borderRadius={"28px"}
-                    colorScheme='ECECEC' variant='outline' bg={"#FBFBFB"} justifyContent={"space-around"} onClick={() => onClickCard(id)}>
-
-                    <GoComment color={"#6F6F6F"} margin={"5px"} />
-                    <Text margin={"5px"}>{totalComments}</Text>
-
-                </Card>
-
             </Flex>
-
         </Card>
     );
 }

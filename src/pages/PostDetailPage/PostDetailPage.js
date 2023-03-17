@@ -1,8 +1,8 @@
 import Header from "../../components/Header/Header";
-import {  useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { CreateComment,  PostWithComments, validaNewPost } from "../../constants/url";
-import { Divider,  } from "@chakra-ui/react";
+import { CreateComment, PostWithComments, validaNewPost } from "../../constants/url";
+import { Divider, } from "@chakra-ui/react";
 import CardComments from "./CardComments";
 import CardNewPostAndComment from "../../inputs/CardNewPostAndComment";
 import { useForm } from "../../hooks/use-form";
@@ -13,6 +13,7 @@ export default function PostDetailPage() {
   const { id } = useParams()
   const [comments, setComments] = useState([])
   const [post, setPost] = useState([])
+  const [isCommentValid, setIsCommentValid] = useState(true)
   const [form, onChangeInputs, clearInputs] = useForm({
     content: ""
 
@@ -20,12 +21,9 @@ export default function PostDetailPage() {
 
   useEffect(() => {
     PostWithComments(id)
-   
       .then(data => {
         setComments(data.comments)
         setPost(data)
-
-
       })
       .catch((error) => {
         console.log(error.response.data.message)
@@ -33,12 +31,6 @@ export default function PostDetailPage() {
       )
   }, [])
 
-
-
-
-
-  const [isCommentValid, setIsCommentValid] = useState(true)
- 
 
   const onSubmit = async (e) => {
     e.preventDefault()
@@ -53,6 +45,7 @@ export default function PostDetailPage() {
       alert(error.response.data)
     }
   }
+
 
   useEffect(() => {
     if (comments.length > 0) {
@@ -86,7 +79,7 @@ export default function PostDetailPage() {
       <Divider borderColor={'#FE7E02'} />
 
       {comments.map((comment, i) => (
-        <CardComments idPost={post.idPost}  key={comment.idComment} id={comment.idComment} content={comment.contentComment}
+        <CardComments idPost={post.idPost} key={comment.idComment} id={comment.idComment} content={comment.contentComment}
           creator={comment.nickname} likesDislikes={comment.likesDislikes}
 
         />

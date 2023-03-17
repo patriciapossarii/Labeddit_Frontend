@@ -1,21 +1,12 @@
-import { Card, Input, Textarea, Button, Box, Stack, InputGroup, FormErrorMessage } from "@chakra-ui/react";
-import { useState } from "react";
-import { useForm } from "../hooks/use-form";
+import { Card, Textarea, Button, Stack, FormErrorMessage, useColorModeValue } from "@chakra-ui/react";
 
-
-
-
-
-export default function CardNewPostAndComment({ isValid, value, onChange, onSubmit,placeholder,buttonName }) {
-
-
-
+export default function CardNewPostAndComment({ isValid, value, onChange, onSubmit, placeholder, buttonName }) {
 
     return (
         <>
             <Stack margin={"30px"} isValid={!isValid} onSubmit={onSubmit} >
                 <form >
-                    <Card bg={"#FBFBFB"}>
+                    <Card bg={useColorModeValue("#FBFBFB",'#FBFBFB"', 'gray.700')}>
                         <Textarea name="content"
                             borderColor={"#E0E0E0"}
                             focusBorderColor='#FE7E02'
@@ -27,7 +18,7 @@ export default function CardNewPostAndComment({ isValid, value, onChange, onSubm
                             ) : undefined}
                         </Textarea>
                     </Card>
-                    
+
                     <Button width={"100%"}
                         marginTop={"20px"}
                         type={"submit"}
@@ -41,7 +32,7 @@ export default function CardNewPostAndComment({ isValid, value, onChange, onSubm
                         variant='add-post'
 
                     >
-                      {buttonName}
+                        {buttonName}
                     </Button>
 
                 </form>

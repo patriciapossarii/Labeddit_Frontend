@@ -1,109 +1,76 @@
 import { Divider, Spinner } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Header from "../../components/Header/Header";
 import { CreatePost, ListPosts, validaNewPost } from "../../constants/url";
 import CardPosts from "./CardPosts";
 import { useForm } from "../../hooks/use-form";
 import { useNavigate } from "react-router-dom";
-import { goToFeedPage } from "../../routes/coordinator";
+import { goToFeedPage, goToLoginPage } from "../../routes/coordinator";
 import CardNewPostAndComment from "../../inputs/CardNewPostAndComment";
+import { GlobalContext } from "../../contexts/GlobalContext";
 
 
 export default function FeedPage() {
-
+  const [posts, setPosts] = useState([])
+  const [isPostValid, setIsPostValid] = useState(true)
+  const context = useContext(GlobalContext)
+  const navigate = useNavigate()
   const [form, onChangeInputs, clearInputs] = useForm({
     content: ""
-   
+
   })
 
-  const [isPostValid, setIsPostValid] = useState(true)
-  const navigate = useNavigate()
 
+  useEffect(() => {
+    if (!context.isAuth) {
+      goToLoginPage(navigate)
+    }
+  }, [])
 
 
   const onSubmit = async (e) => {
     e.preventDefault()
- 
     setIsPostValid(validaNewPost(form.content))
     goToFeedPage(navigate)
-      
     try {
-    isPostValid && await CreatePost({
+      isPostValid && await CreatePost({
         content: form.content
       })
-      
-      alert("Post Cadastrado");
-      console.log()
+      console.log("Post Cadastrado com sucesso!")
 
     } catch (error) {
-      alert(error.response.data)
+      console.log("Erro de postar", error.response.data)
     }
-
-    
   }
 
-
-
-
-
-  //-----------------------
-  const [posts, setPosts] = useState([])
 
   useEffect(() => {
     if (posts.length > 0) {
       const postsString = JSON.stringify(posts)
       localStorage.setItem("posts", postsString)
     }
-
     const postsGet = localStorage.getItem("posts")
     if (postsGet !== null) {
       const postsArray = JSON.parse(postsGet)
       setPosts(postsArray)
     }
-
     ListPosts()
-
       .then(data => {
         setPosts(data)
-        console.log(data)
-
       })
-
-      
       .catch((error) => {
-       console.log(error.response.data.message)
+        console.log("Erro LisPost",error.response.data.message)
       }
       )
   }, [])
 
-  if (!posts) {
-    return <Spinner color='red.500' />;
-  }
-
-  /*
-  useEffect(() => {
-    if (posts.length > 0) {
-      const postsString = JSON.stringify(posts)
-      localStorage.setItem("posts", postsString)
-    }
-  }, [posts])
-
-
-  useEffect(() => {
-    const postsGet = localStorage.getItem("posts")
-    if (postsGet !== null) {
-      const postsArray = JSON.parse(postsGet)
-      setPosts(postsArray)
-    }
-  }, [])
-*/
 
   return (
     <>
       <Header isOnFeedPage={true} />
 
-      <CardNewPostAndComment  isValid={isPostValid} value={form.content} onChange={onChangeInputs} onSubmit={onSubmit}
-      placeholder='Escreva seu post...' buttonName='Postar'/>
+      <CardNewPostAndComment isValid={isPostValid} value={form.content} onChange={onChangeInputs} onSubmit={onSubmit}
+        placeholder='Escreva seu post...' buttonName='Postar' />
 
       <Divider borderColor={'#FE7E02'} />
 
@@ -117,3 +84,4 @@ export default function FeedPage() {
     </>
   );
 }
+

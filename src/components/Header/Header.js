@@ -18,17 +18,29 @@ import Vector4 from "../../assets/Vector4.svg"
 import { goToLoginPage } from '../../routes/coordinator';
 import { goToFeedPage } from '../../routes/coordinator';
 import { GrClose } from 'react-icons/gr'
+import { GlobalContext } from '../../contexts/GlobalContext';
+import { useContext } from 'react';
 
-export default function Header(props) {
+export default function Header({ isOnSignupPage, isOnFeedPage, isOnPostDetailPage}) {
+    
     const { colorMode, toggleColorMode } = useColorMode();
+    const context = useContext(GlobalContext)
     const navigate = useNavigate()
-    const { isOnSignupPage, isOnFeedPage, isOnPostDetailPage } = props
+
+
+    const logout = () => {
+        window.localStorage.removeItem("labeddit.token")
+        context.setIsAuth(false)
+        goToLoginPage(navigate)
+    }
+
+
     return (
         <>
             <Box bg={useColorModeValue('#EDEDED', 'gray.900')} h={"50px"}>
 
                 <Flex minWidth='max-content' alignItems='center' gap='2'>
-                <Spacer />
+                    <Spacer />
                     {isOnPostDetailPage &&
                         <Button
                             as={Button}
@@ -37,7 +49,7 @@ export default function Header(props) {
                             cursor={'pointer'}
                             minW={0}
                             onClick={() => goToFeedPage(navigate)}>
-                           <GrClose borderColor={'#A3A3A3'}/>
+                            <GrClose borderColor={'#A3A3A3'} />
                         </Button>}
                     <Spacer />
                     <Spacer />
@@ -79,7 +91,7 @@ export default function Header(props) {
                                 variant={'link'}
                                 cursor={'pointer'}
                                 minW={0}
-                                onClick={() => goToLoginPage(navigate)}>
+                                onClick={logout}>
                                 <Text color={" #4088CB"}>Sair</Text>
                             </Button>
                         }
@@ -93,7 +105,7 @@ export default function Header(props) {
                                 variant={'link'}
                                 cursor={'pointer'}
                                 minW={0}
-                                onClick={() => goToLoginPage(navigate)}>
+                                onClick={logout}>
                                 <Text color={" #4088CB"}>Sair</Text>
                             </Button>
 

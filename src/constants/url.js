@@ -44,6 +44,7 @@ export const CreatePost= async (body)=>{
     return data
 }
 
+
 export const CreateLikeDislikePost= async (id,body)=>{
     
     const {data} = await axios.post(`${BASE_URL}/posts/${id}/like`,
@@ -56,6 +57,7 @@ export const CreateLikeDislikePost= async (id,body)=>{
     return data
 }
 
+
 export const CreateLikeDislikeComment= async (idPost,body,idComment)=>{
     
     const {data} = await axios.post(`${BASE_URL}/posts/${idPost}/comment/${idComment}/like`,
@@ -67,8 +69,6 @@ export const CreateLikeDislikeComment= async (idPost,body,idComment)=>{
     })
     return data
 }
-
-
 
 
 export const CreateComment= async (id,body)=>{
