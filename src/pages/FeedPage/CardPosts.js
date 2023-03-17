@@ -1,9 +1,6 @@
 import { Card, CardBody, } from "@chakra-ui/card";
 import { TbArrowBigDown, TbArrowBigUp } from 'react-icons/tb';
-import {
-    Flex,
-    Text,
-} from '@chakra-ui/react';
+import { Flex, Text, useColorModeValue, } from '@chakra-ui/react';
 import { GoComment } from 'react-icons/go';
 import { useState } from "react";
 import { goToPostDetailPage } from "../../routes/coordinator";
@@ -17,12 +14,11 @@ export default function CardPosts({ id, creator, content, likesDislikes, totalCo
 
     const onClickCard = (id) => {
         goToPostDetailPage(navigate, id)
-
-
     }
 
     return (
-        <Card margin={"30px"} bg={"#FBFBFB"} borderColor={"#E0E0E0"} >
+
+        <Card margin={"30px"} borderColor={"#E0E0E0"} bg={useColorModeValue("#FBFBFB", '#FBFBFB"', 'gray.700')}>
 
 
             <Text color={"#6F6F6F"} fontSize={"12px"} align={"left"} position={"absolute"} margin={"10px"}>
@@ -30,18 +26,15 @@ export default function CardPosts({ id, creator, content, likesDislikes, totalCo
             </Text>
 
 
-
-
-
-            <CardBody marginTop={"30px"} marginLeft={"-10px"}>
+            <CardBody marginTop={"30px"} marginLeft={"-10px"} >
                 <Text fontStyle={"regular"} fontSize={"18px"} align={"left"}>{content}</Text>
             </CardBody>
 
 
-            <Flex align='center' bg={"#FBFBFB"} direction={"row"} >
+            <Flex align='center' bg={useColorModeValue("#FBFBFB", '#FBFBFB"', 'gray.700')} direction={"row"} >
 
-                <Card align='center' margin={"20px"} width={"98px"} height={"28px"} bg={"#FBFBFB"} direction={"row"} borderRadius={"28px"}
-                    colorScheme='ECECEC' variant='outline' justifyContent={"space-around"}>
+                <Card align='center' margin={"20px"} width={"98px"} height={"28px"} direction={"row"} borderRadius={"28px"}
+                    colorScheme='ECECEC' variant='outline' justifyContent={"space-around"} bg={useColorModeValue("#FBFBFB", '#FBFBFB"', 'gray.700')}>
                     <Flex
                         alignItems="center"
                         justifyContent={'space-between'}
@@ -71,7 +64,8 @@ export default function CardPosts({ id, creator, content, likesDislikes, totalCo
                 </Card>
 
                 <Card align='center' margin={"20px"} width={"66px"} height={"28px"} direction={"row"} borderRadius={"28px"}
-                    colorScheme='ECECEC' variant='outline' bg={"#FBFBFB"} justifyContent={"space-around"} onClick={() => onClickCard(id)}>
+                    colorScheme='ECECEC' variant='outline' justifyContent={"space-around"} onClick={() => onClickCard(id)}
+                    bg={useColorModeValue("#FBFBFB", '#FBFBFB"', 'gray.700')}>
 
                     <GoComment color={"#6F6F6F"} margin={"5px"} />
                     <Text margin={"5px"}>{totalComments}</Text>
@@ -81,5 +75,6 @@ export default function CardPosts({ id, creator, content, likesDislikes, totalCo
             </Flex>
 
         </Card>
+
     );
 }

@@ -19,7 +19,7 @@ export const PasswordInput = ({ isValid, value, onChange }) => {
 
 
     return (
-        <FormControl margin={"10px"}  id="password" isInvalid={!isValid}>
+        <FormControl margin={"10px"} id="password" isInvalid={!isValid}>
             <InputGroup size='md'>
                 <Input
                     name="password"
